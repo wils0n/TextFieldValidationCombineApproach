@@ -43,7 +43,7 @@ class ViewController: UIViewController {
       return $password
         .receive(on: RunLoop.main)
         .map { password in
-            let band = password.count > 0
+            let band = password.isStrongPassword
             return band
       }
       .eraseToAnyPublisher()
@@ -53,9 +53,9 @@ class ViewController: UIViewController {
       return $email
         .receive(on: RunLoop.main)
         .map { email in
-            let band = email.count > 0
+            let band = email.isFormatValidEmail
             return band
-      }
+        }
       .eraseToAnyPublisher()
     }
     
