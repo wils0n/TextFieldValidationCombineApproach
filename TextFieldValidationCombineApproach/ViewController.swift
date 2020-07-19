@@ -22,8 +22,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        stream = validatedCredentials
+        stream = isFormValidPublisher
             .receive(on: RunLoop.main).assign(to: \.isEnabled, on: submitButton)
+        
     }
 
     @IBAction private func emailChanged(_ sender: UITextField) {
@@ -59,7 +60,7 @@ class ViewController: UIViewController {
       .eraseToAnyPublisher()
     }
     
-    var validatedCredentials: AnyPublisher<Bool, Never> {
+    var isFormValidPublisher: AnyPublisher<Bool, Never> {
         return Publishers.CombineLatest(isEmailValidPublisher, isPasswordValidPublisher)
             .map { validatedEmail, validatePassword in
                 return (validatedEmail &&  validatePassword)
